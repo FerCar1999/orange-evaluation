@@ -1,0 +1,18 @@
+
+version: '3.3'
+services:
+  database:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'orange'   
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: '123'      
+      MYSQL_ROOT_PASSWORD: '12345'
+    ports:
+      - '3304:3306'
+    expose:
+      - '3306'
+    volumes:
+      - './mysql-data/db:/var/lib/mysql'
