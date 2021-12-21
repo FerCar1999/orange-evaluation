@@ -1,0 +1,153 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.7.36 - MySQL Community Server (GPL)
+-- Server OS:                    Linux
+-- HeidiSQL Version:             11.3.0.6295
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Dumping database structure for orange
+CREATE DATABASE IF NOT EXISTS `orange` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `orange`;
+
+-- Dumping structure for table orange.failed_jobs
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table orange.failed_jobs: ~0 rows (approximately)
+/*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
+
+-- Dumping structure for table orange.migrations
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table orange.migrations: ~5 rows (approximately)
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+	(1, '2014_10_12_000000_create_users_table', 1),
+	(2, '2014_10_12_100000_create_password_resets_table', 1),
+	(3, '2019_08_19_000000_create_failed_jobs_table', 1),
+	(4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+	(5, '2021_12_20_210114_create_products_table', 1);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+
+-- Dumping structure for table orange.password_resets
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table orange.password_resets: ~0 rows (approximately)
+/*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
+
+-- Dumping structure for table orange.personal_access_tokens
+CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table orange.personal_access_tokens: ~0 rows (approximately)
+/*!40000 ALTER TABLE `personal_access_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `personal_access_tokens` ENABLE KEYS */;
+
+-- Dumping structure for table orange.products
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `sku` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` int(10) unsigned NOT NULL,
+  `price` decimal(10,2) unsigned NOT NULL,
+  `description` mediumtext COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default.jpg',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table orange.products: ~10 rows (approximately)
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` (`id`, `sku`, `name`, `quantity`, `price`, `description`, `image`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 'WVHMTOJT84E', 'Morales-Sarabia', 2, 965.91, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(2, 'BMUNVVUY45L', 'Luis y Hernando', 7, 909.01, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(3, 'GAKOYIPM', 'Hernándes, Santos y Ros S. de H.', 7, 747.41, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(4, 'NBLUHMW7EQB', 'Prieto de Estrada e Hija', 3, 913.34, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(5, 'JVOBFVIR', 'Valladares y Balderas', 3, 618.69, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(6, 'VVBRZFA1GQI', 'Esquivel, Vega y Galván e Hijo', 7, 286.07, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(7, 'YNJSHIG2D2W', 'Corporación Esparza-Banda', 4, 528.12, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(8, 'JFJTHEV2', 'Gurule de Ruelas', 3, 582.00, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(9, 'ZHMBFEKSWD8', 'Domínquez, Jaramillo y Lorente y Flia.', 9, 616.18, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(10, 'QACRELDLKVS', 'Barragán de Bustos S. de H.', 2, 728.18, NULL, 'default.jpg', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL);
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+
+-- Dumping structure for table orange.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` char(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthday` date NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_username_unique` (`username`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table orange.users: ~11 rows (approximately)
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`id`, `name`, `phone`, `username`, `birthday`, `email`, `password`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 'Fernando Carranza', '79862231', 'fercarranza99', '1999-05-25', 'carranzafernando99@gmail.com', '$2y$10$JM/IwfVO4V3WqM5MRZsTaeuA.rOvon.jVRhtHjCmMNFo4.gX2UBJa', NULL, NULL, NULL),
+	(2, 'Dr. Alex Dávila', '22753981', 'uzarate', '2021-04-04', 'abril95@example.org', '$2y$10$GUGo97Ut1pME/QrbixtgoOVNls/rI0L2R3grXdOtUwFVS3RFRoGCa', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(3, 'Martín Fuentes', '22412420', 'jaime.vallejo', '1991-10-02', 'lguevara@example.org', '$2y$10$0TWKZBRCb6ZSbzh7MZVv3OBbnrzRIk9rwx9rErHzWsYVX./MJ2Eka', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(4, 'Dña Yolanda Carrera', '21146328', 'ortiz.unai', '1994-09-22', 'riojas.patricia@example.net', '$2y$10$oRE1Rq.0h4XT2/g62BuzVemnerYyoG0.3SxxmKL3XCOM9XTbkFY6O', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(5, 'Ángel Olivárez', '22793675', 'guerra.gloria', '1985-03-21', 'zgimenez@example.org', '$2y$10$TR0gXToll2nqB3yoR6wpfORL5D07erENiUfI/0rMeFw6QgPOuf2om', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(6, 'Aitana Arredondo', '21406353', 'yago02', '1982-02-22', 'sfigueroa@example.com', '$2y$10$W5etPWluUmapYubr/erDKuZ3lVQZckZ8z8ydbOJde5nowu4Jhhanq', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(7, 'Ana María Hernando', '21164428', 'lerma.sandra', '1984-04-25', 'yflorez@example.net', '$2y$10$qHOJnBnSR01U6O.baKGc6OV3GDDgsZfAxQOXFc5knCpzLZ2HWc4c2', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(8, 'Saúl Barraza', '22480094', 'godinez.victoria', '2003-10-16', 'fmarcos@example.org', '$2y$10$ZuFznXhyB2hD2xWUHh4IleZ.L1hU/x4D2lT3MbRDjjWuBnjXmA1kK', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(9, 'Sr. Cristian Ordoñez Segundo', '22967395', 'ulibarri.patricia', '2016-03-11', 'archuleta.arnau@example.net', '$2y$10$1tUsZro9hbiOFc9ifd75rOhx6qV9jBE/oNYB2E9s3l9saov/5P4ga', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(10, 'Sr. Ángel Requena Segundo', '22602329', 'xcordero', '2011-04-20', 'ynoriega@example.org', '$2y$10$zujNinR.zUUPp.cjKCZMquYQYvMJ2aT8gUBVV0WgX87UqdXBHi/qS', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL),
+	(11, 'Pablo Melgar Hijo', '22469003', 'arellano.aurora', '1971-08-30', 'raul19@example.com', '$2y$10$Bw6ozIteJm4RHK01I3Y97emkhr494UFkhC2dLQbPc3D13TvWMRrIq', '2021-12-21 10:06:05', '2021-12-21 10:06:05', NULL);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

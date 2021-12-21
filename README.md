@@ -87,3 +87,12 @@ Con esto, crearemos registros en la base.
 Si queremos levantar localmente el servidor y probar las rutas almacenadas en la siguiente [documentación](https://documenter.getpostman.com/view/11275843/UVRBmRps) solo tenemos que ejecutar el siguiente comando:
 
     php artisan serve
+
+## Usuario de prueba
+Para usar la ruta de login el usuario es el siguiente:
+
+- email: carranzafernando99@gmail.com
+- password: fer12345
+
+## Base de datos
+El dump de la base de datos se encuentra en la raiz del proyecto, el archivo llamado `orange_db`
