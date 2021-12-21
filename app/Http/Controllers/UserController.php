@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RecoveryPasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserStoreRequest;
+use App\Mail\RecoveryPasswordMail;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -86,5 +91,37 @@ class UserController extends Controller
         } else {
             return response()->json(['error' => 'Error al eliminar el usuario'], 400);
         }
+    }
+
+    public function recoveryPassword(RecoveryPasswordRequest $request)
+    {
+        $validated = $request->validated();
+        $user = $this->model->where('email', $validated['email'])->first();
+        if ($user) {
+            $token = Str::random(40);
+            $user->token = $token;
+            //generando registro en password_reset
+            DB::table('password_resets')->insert(['email' => $user->email, 'token' => $token, 'created_at' => Carbon::now()]);
+
+            $recovery = array(
+                'name' => $user->name,
+                'token' => $token
+            );
+            //enviando correo
+            Mail::to($user->email)->queue(new RecoveryPasswordMail($recovery));
+            return response()->json(['message' => 'Correo de recuperacion enviado con exito'], 200);
+        } else {
+            return response()->json(['message' => 'No se ha encontrado el usuario'], 400);
+        }
+    }
+
+    public function checkRecovery($token)
+    {
+        if ($token != null) {
+            $record = DB::table('password_resets')->where('token', $token)->latest()->first();
+            $diff_time = Carbon::parse($record->created_at)->diffInMinutes(Carbon::now());
+            return view('recovery_password', ['diff_time' => $diff_time]);
+        }
+        return response()->json(['error' => 'No se ha encontrado el token'], 400);
     }
 }

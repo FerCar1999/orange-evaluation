@@ -24,6 +24,7 @@ Route::prefix('auth')->middleware('api')->group(function () {
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
 });
+Route::post('recovery-password', [UserController::class, 'recoveryPassword']);
 
 Route::resource('users', UserController::class);
 
