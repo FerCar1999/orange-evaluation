@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,16 +29,7 @@ class UserStoreRequest extends FormRequest
             'username' => 'required|unique:users,username',
             'birthday' => 'required|date',
             'email' => 'required|email|unique:users,email',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'required' => 'El campo :attribute es requerido',
-            'numeric' => 'El campo :attribute debe ser numerico',
-            'unique' => 'El campo :attribute ya ha sido registrado',
-            'email' => 'El campo :attribute debe ser un correo',
+            'password' => 'required',
         ];
     }
 
@@ -50,6 +41,7 @@ class UserStoreRequest extends FormRequest
             'username' => 'usuario',
             'birthday' => 'fecha de nacimiento',
             'email' => 'correo',
+            'password' => 'contraseña',
         ];
     }
 }

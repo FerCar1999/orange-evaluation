@@ -18,15 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('auth')->middleware('api')->group(function () {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
+Route::middleware('api')->group(function () {
+    //Rutas con autenticacion
+    Route::prefix('auth')->group(function () {
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('refresh', [AuthController::class, 'refresh']);
+        Route::post('me', [AuthController::class, 'me']);
+    });
+    
+    Route::resource('users', UserController::class);
+    Route::resource('products', ProductController::class);
+    Route::get('products/find/{key}', [ProductController::class, 'findByKey']);
 });
+
+Route::post('login', [AuthController::class, 'login']);
 Route::post('recovery-password', [UserController::class, 'recoveryPassword']);
-
-Route::resource('users', UserController::class);
-
-Route::resource('products', ProductController::class);
-Route::get('products/find/{key}', [ProductController::class, 'findByKey']);
+Route::get('check-recovery/{token}', [UserController::class, 'checkRecovery']);

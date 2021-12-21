@@ -10,7 +10,7 @@
 
 <body>
     <h4>Estimado {{ $recovery['name'] }} ingrese al siguiente enlace para recuperar su contraseña</h4>
-    <a href="http://127.0.0.1:8000/recovery-password/{{ $recovery['token'] }}">Haz click aqui</a>
+    <a href="http://127.0.0.1:8000/api/check-recovery/{{ $recovery['token'] }}">Haz click aqui</a>
 </body>
 
 </html>

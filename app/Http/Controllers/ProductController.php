@@ -12,6 +12,7 @@ class ProductController extends Controller
 
     public function __construct(Product $model)
     {
+        $this->middleware(['auth:api']);
         $this->model = $model;
     }
     /**
@@ -33,6 +34,12 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $validated = $request->validated();
+        //Guardando imagen
+        $path = "default.jpg";
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->storeAs('images', uniqid() . '.' . $request->file('image')->extension());
+        }
+        $validated['image'] = $path;
         if ($this->model->create($validated)) {
             return response()->json(['message' => 'Producto creado con exito'], 201);
         } else {
@@ -61,6 +68,10 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $id)
     {
         $validated = $request->validated();
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->storeAs('images', uniqid() . '.' . $request->file('image')->extension());
+            $validated['image'] = $path;
+        }
         if ($this->model->findOrFail($id)->update($validated)) {
             return response()->json(['message' => 'Producto modificado con exito'], 200);
         } else {

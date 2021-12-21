@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RecoveryPasswordRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Mail\RecoveryPasswordMail;
@@ -19,6 +20,7 @@ class UserController extends Controller
 
     public function __construct(User $model)
     {
+        $this->middleware('auth:api',['except'=>['recoveryPassword','checkRecovery']]);
         $this->model = $model;
     }
     /**
@@ -37,14 +39,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserStoreRequest $request)
+    public function store(StoreUserRequest $request)
     {
         $validated = $request->validated();
-        //Generando clave
-        $password = Str::random(8);
-        $validated['password'] = bcrypt($password);
+        $validated['password'] = bcrypt($validated['password']);
         if ($this->model->create($validated)) {
-            return response()->json(['message' => 'Usuario creado con exito', 'password' => $password], 201);
+            return response()->json(['message' => 'Usuario creado con exito'], 201);
         } else {
             return response()->json(['error' => 'Error al crear el usuario'], 400);
         }
@@ -99,10 +99,8 @@ class UserController extends Controller
         $user = $this->model->where('email', $validated['email'])->first();
         if ($user) {
             $token = Str::random(40);
-            $user->token = $token;
             //generando registro en password_reset
             DB::table('password_resets')->insert(['email' => $user->email, 'token' => $token, 'created_at' => Carbon::now()]);
-
             $recovery = array(
                 'name' => $user->name,
                 'token' => $token
@@ -120,7 +118,11 @@ class UserController extends Controller
         if ($token != null) {
             $record = DB::table('password_resets')->where('token', $token)->latest()->first();
             $diff_time = Carbon::parse($record->created_at)->diffInMinutes(Carbon::now());
-            return view('recovery_password', ['diff_time' => $diff_time]);
+            if ($diff_time > 15) {
+                return response()->json(['error' => 'Token caducado'], 401);
+            } else {
+                return response()->json(['message' => 'Token activo'], 200);
+            }
         }
         return response()->json(['error' => 'No se ha encontrado el token'], 400);
     }
