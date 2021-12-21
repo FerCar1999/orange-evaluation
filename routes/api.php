@@ -28,4 +28,4 @@ Route::prefix('auth')->middleware('api')->group(function () {
 Route::resource('users', UserController::class);
 
 Route::resource('products', ProductController::class);
-Route::get('products/find/{key}', FindProductController::class);
+Route::get('products/find/{key}', [ProductController::class, 'findByKey']);

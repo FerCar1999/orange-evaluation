@@ -82,4 +82,11 @@ class ProductController extends Controller
             return response()->json(['message' => 'Error al eliminar el producto'], 400);
         }
     }
+
+    public function findByKey($key)
+    {
+        return Product::where('name', 'like', '%' . $key . '%')
+            ->orWhere('sku', 'like', '%' . $key . '%')
+            ->paginate(5);
+    }
 }
