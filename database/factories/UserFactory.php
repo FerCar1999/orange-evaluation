@@ -19,7 +19,7 @@ class UserFactory extends Factory
             'username' => $this->faker->userName(),
             'birthday' => $this->faker->date('Y-m-d'),
             'email' => $this->faker->unique()->safeEmail(),
-            'password' => bcrypt($this->faker->password())
+            'password' => bcrypt("fer12345")
         ];
     }
 }
