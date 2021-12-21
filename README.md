@@ -48,7 +48,7 @@ Nos mostrará la lista de nuestros servicios y ahí veremos el de nuestra base d
 ## Configuracion proyecto
 Para seguir con el levantamiento del proyecto, necesitamos generar nuestro archivo `.env`
 
-Para eso solo ejecutamos el siguiente comando en consola (esto si estamos en Linux):
+Para eso solo ejecutamos el siguiente comando en consola:
 
     cp .env.example .env
 
